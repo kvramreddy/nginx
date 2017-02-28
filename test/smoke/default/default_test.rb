@@ -4,15 +4,16 @@
 
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
-
-unless os.windows?
-  describe user('root') do
-    it { should exist }
-    skip 'This is an example test, replace with your own test.'
-  end
+describe package('nginx') do
+  it { should be_installed }
 end
 
-describe port(80) do
-  it { should_not be_listening }
-  skip 'This is an example test, replace with your own test.'
+describe service('nginx') do
+  it { should be_installed }
+  it { should be_running }
+  it { should be_enabled }
+end
+
+describe command('curl -s -o /dev/null -w "%{http_code}" http://localhost') do
+  its('stdout') { should match '200' }
 end

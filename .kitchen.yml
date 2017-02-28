@@ -16,6 +16,8 @@ platforms:
   - name: ubuntu-14.04
     driver:
       box: ubuntu/trusty64
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080}]
 
 suites:
   - name: default
