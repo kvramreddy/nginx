@@ -2,12 +2,23 @@
 driver:
   name: vagrant
 
+driver:
+  name: dokken
+  chef_version: latest
+  privileged: true # SystemD/Upstart need privileged access to run daemons
+
+transport:
+  name: dokken
+
 provisioner:
+  name: dokken
+
+#provisioner:
   name: chef_zero
   # You may wish to disable always updating cookbooks in CI or other testing environments.
   # For example:
   #   always_update_cookbooks: <%= !ENV['CI'] %>
-  always_update_cookbooks: true
+#  always_update_cookbooks: true
 
 verifier:
   name: inspec
