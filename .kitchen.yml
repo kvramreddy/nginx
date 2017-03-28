@@ -1,11 +1,8 @@
 ---
 driver:
-  name: vagrant
-
-driver:
   name: dokken
   chef_version: latest
-  privileged: true # SystemD/Upstart need privileged access to run daemons
+  privileged: true
 
 transport:
   name: dokken
@@ -13,22 +10,17 @@ transport:
 provisioner:
   name: dokken
 
-#provisioner:
-  name: chef_zero
-  # You may wish to disable always updating cookbooks in CI or other testing environments.
-  # For example:
-  #   always_update_cookbooks: <%= !ENV['CI'] %>
-#  always_update_cookbooks: true
+platforms:
+  - name: ubuntu1604
+    driver:
+      image: ubuntu:16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install systemd apt-transport-https lsb-release procps net-tools -y
 
 verifier:
   name: inspec
-
-platforms:
-  - name: ubuntu-14.04
-    driver:
-      box: ubuntu/trusty64
-      network:
-        - ["forwarded_port", {guest: 80, host: 8080}]
 
 suites:
   - name: default

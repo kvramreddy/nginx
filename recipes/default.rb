@@ -28,5 +28,7 @@ template '/etc/nginx/sites-available/default' do
 end
 
 service 'nginx' do
+  supports restart: true, reload: true, status: true
+  provider Chef::Provider::Service::Init::Systemd
   action [:enable, :start]
 end
